@@ -25,5 +25,5 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull visx/tic-tac-toe-server:latest
       - name: Run docker contianer
-        run: docker run -d -p 5000:5000 --name nodejs-app-container
+        run: docker run -d -p 5000:5000 --name nodejs-app-container visx/tic-tac-toe-server
         
