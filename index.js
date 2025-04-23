@@ -8,6 +8,9 @@ app.use(express.json());
 
 let scores = { X: 0, O: 0 };
 
+app.get('/', (req, res) => {
+  res.send("Hello");
+});
 app.get('/api/scores', (req, res) => {
   res.json(scores);
 });
