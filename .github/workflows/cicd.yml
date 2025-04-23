@@ -1,0 +1,28 @@
+name: Deploy node application
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Source
+        uses: actions/Checout@v4
+      - name: Login to docker hub
+        run:  docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      - name: Build Docker Image
+        run: docker build -t visx/tic-tac-toe-server .
+      - name: Publish Image to docker hub
+        run: docker push visx/tic-tac-toe-server:latest
+  
+  deploy:
+    needs: build 
+    runs-on: self-hosted
+    steps: 
+      - name: Pull image from docker hub
+        run: docker pull visx/tic-tac-toe-server:latest
+      - name: Run docker contianer
+        run: docker run -d -p 5000:5000 --name nodejs-app-container
+        
